@@ -1,0 +1,65 @@
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  name: Statek
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
+  time_zone: Europe/Prague
+  currency: CZK
+  external_url: !secret external_url
+  internal_url: !secret internal_url
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.167.5
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include_dir_merge_list automation
+scene: !include_dir_merge_list scene
+script: !include_dir_merge_named script
+
+
+sensor:
+  - platform: mqtt
+    name: "Vindriktning Temperature"
+    state_topic: "vindriktning/0x134607073b28"
+    unit_of_measurement: "°C"
+    value_template: "{{ value_json.temperature }}"
+  - platform: mqtt
+    name: "Vindriktning Humidity"
+    state_topic: "vindriktning/0x134607073b28"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    name: "Vindriktning PM25 Particles"
+    state_topic: "vindriktning/0x134607073b28"
+    unit_of_measurement: "ug/m3"
+    value_template: "{{ value_json.pm25 }}"
+  - platform: mqtt
+    name: "Vindriktning CO2"
+    state_topic: "vindriktning/0x134607073b28"
+    unit_of_measurement: "ppm"
+    value_template: "{{ value_json.co2 }}"
+
+
+switch:
+  - platform: mqtt
+    name: "Vindriktning LED (on/off)"
+    state_topic: "vindriktning/0x134607073b28/lights"
+    value_template: "{{ value_json.switch }}"
+    command_topic: "vindriktning/0x134607073b28/lights/set"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
