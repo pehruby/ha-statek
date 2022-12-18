@@ -1,4 +1,4 @@
-- alias: "Temp slider moved"
+- alias: "Vindrikning slider moved"
   trigger:
     platform: state
     entity_id: input_number.vindrikning_brightness
