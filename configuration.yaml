@@ -49,6 +49,11 @@ sensor:
     unit_of_measurement: "ppm"
     value_template: "{{ value_json.co2 }}"
 
+binary_sensor:
+  - platform: ping
+    name: "Rybina reachability"
+    host: 192.168.164.5
+    scan_interval: 1
 
 switch:
   - platform: mqtt
@@ -63,3 +68,12 @@ switch:
     optimistic: false
     qos: 0
     retain: true
+
+input_number:
+  vindrikning_brightness:
+    name: Vidriktning Brightness Slider
+    min: 1
+    max: 255
+    step: 1
+    unit_of_measurement: step
+    icon: mdi:target

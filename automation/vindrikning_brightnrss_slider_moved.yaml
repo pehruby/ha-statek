@@ -1,0 +1,10 @@
+- alias: "Temp slider moved"
+  trigger:
+    platform: state
+    entity_id: input_number.vindrikning_brightness
+  action:
+    service: mqtt.publish
+    data:
+      topic: "vindriktning/0x134607073b28/brightness/set"
+      retain: true
+      payload_template: "{{ states('input_number.vindrikning_brightness') }}"
