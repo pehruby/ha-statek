@@ -1,4 +1,5 @@
 - alias: "Entry door opened"
+  id: automation.entry_door_opened
   trigger:
     - platform: state
       entity_id:
@@ -11,6 +12,7 @@
         entity_id: light.loznice_petr
 
 - alias: "Entry door closed"
+  id: automation.entry_door_closed
   trigger:
     - platform: state
       entity_id:
